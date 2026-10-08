@@ -5,7 +5,7 @@
     <div class="cabecalho-pagina">
         <div>
             <h1>Partidas</h1>
-            <p class="subtitulo">Cadastro das partidas do interclasse</p>
+            <p class="subtitulo"> ⚽ Cadastro das partidas do interclasse</p>
         </div>
 
         <a href="{{ url_for('nova_partida') }}" class="botao">+ Nova Partida</a>
@@ -16,6 +16,7 @@
     <section class="painel formulario">
         <h2>Nova Partida</h2>
 
+
         {% if not times %}
             <p class="vazio">Cadastre pelo menos dois times antes de criar uma partida.</p>
         {% else %}
@@ -25,33 +26,39 @@
                     <label for="time_casa_id">Time da Casa *</label>
                     <select id="time_casa_id" name="time_casa_id" required>
                         <option value="">Selecione</option>
+                    <tbody>
+                {% for time, jogadores in times %}
+                    <option value="{{ time.id }}">{{time.nome}}</option>
+                {% endfor %}
+                </tbody>
                     </select>
                 </div>
                 <div class="campo">
                     <label for="time_visitante_id">Time Visitante *</label>
                     <select id="time_visitante_id" name="time_visitante_id" required>
                         <option value="">Selecione</option>
+                    <tbody>
+                {% for time, jogadores in times %}
+                    <option value="{{ time.id }}">{{time.nome}}</option>
+                {% endfor %}
+                </tbody>
                     </select>
                 </div>
             </div>
             <div class="linha-campos">
                 <div class="campo">
-                    <label for="placar_casa">Placar Casa</label>
-                    <input type="number" id="placar_casa" name="placar_casa" min="0" value="0">
+                    <label for="gols_casa">Gols Casa</label>
+                    <input type="number" id="gols_casa" name="gols_casa" min="0" value="0">
                 </div>
                 <div class="campo">
-                    <label for="placar_visitante">Placar Visitante</label>
-                    <input type="number" id="placar_visitante" name="placar_visitante" min="0" value="0">
+                    <label for="gols_visitante">Gols Visitante</label>
+                    <input type="number" id="gols_visitante" name="gols_visitante" min="0" value="0">
                 </div>
             </div>
             <div class="linha-campos">
                 <div class="campo">
-                    <label for="data_partida">Data</label>
+                    <label for="data_partida">Data do Jogo</label>
                     <input type="date" id="data_partida" name="data_partida">
-                </div>
-                <div class="campo">
-                    <label for="local">Local</label>
-                    <input type="text" id="local" name="local" placeholder="Ex: Quadra 1">
                 </div>
             </div>
             <div class="acoes-form">
@@ -67,7 +74,32 @@
         <h2>Lista de Partidas</h2>
         {% if partidas %}
         <table>
-<!--            Insira sua tabela aqui  -->
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Casa</th>
+                     <th>Gols Casa</th>
+                    <th>Gols Visitante</th>
+                    <th>Visitante</th>
+                    <th>Data do Jogo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for partida, time_casa, time_visitante in partidas %}
+                <tr>
+                    <td>{{ partida.id }}</td>
+                    <td>{{ time_casa.nome }}</td>
+                     <td>{{ partida.gols_casa }}</td>
+                    <td>{{ partida.gols_visitante }}</td>
+                    <td>{{ time_visitante.nome }}</td>
+                    <td>{{ partida.data_partida }}</td>
+                    <td>
+                        <a href="{{ url_for('excluir_partida', partida_id=partida.id) }}"> Excluir</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
         </table>
         {% else %}
             <p class="vazio">Nenhuma partida cadastrada ainda.</p>

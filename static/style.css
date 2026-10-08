@@ -9,7 +9,7 @@
     --cor-primaria-escura: #1e4e8c;
     --cor-fundo: #f4f6f9;
     --cor-painel: #ffffff;
-    --cor-texto: #2d3748;
+    --cor-texto: #136b8b;
     --cor-texto-claro: #718096;
     --cor-borda: #e2e8f0;
     --cor-sucesso: #2f855a;
@@ -315,13 +315,13 @@ input:focus, select:focus {
     font-size: 0.9rem;
 }
 
-.flash-sucesso {
+.flash-success {
     background-color: var(--cor-sucesso-fundo);
     color: var(--cor-sucesso);
     border: 1px solid #9ae6b4;
 }
 
-.flash-erro {
+.flash-error {
     background-color: var(--cor-erro-fundo);
     color: var(--cor-erro);
     border: 1px solid #feb2b2;

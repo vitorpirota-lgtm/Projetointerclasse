@@ -22,18 +22,28 @@
             </div>
             <div class="linha-campos">
                 <div class="campo">
-                    <label for="idade">Idade</label>
-                    <input type="number" id="idade" name="idade" min="0">
+                    <label for="numero_camisa">Número</label>
+                    <input type="number" id="numero_camisa" name="numero_camisa" min="0">
                 </div>
                 <div class="campo">
                     <label for="posicao">Posição</label>
-                        TROCAR PARA SELECT OPTION
-                    <input type="text" id="posicao" name="posicao" placeholder="Ex: Atacante">
+                <select id="posicao" name="posicao">
+                    <option value="goleiro">Goleiro</option>
+                    <option value="zagueiro">Zagueiro</option>
+                    <option value="lateral">Lateral</option>
+                    <option value="meio campo">Meio Campo</option>
+                    <option value="atacante">Atacante</option>
+                </select>
                 </div>
             </div>
             <div class="campo">
                 <label for="time_id">Time</label>
                 <select id="time_id" name="time_id">
+                <tbody>
+                {% for time, jogadores in times %}
+                    <option value="{{ time.id }}">{{time.nome}}</option>
+                {% endfor %}
+                </tbody>
                     <option value="">Sem time</option>
                 </select>
             </div>
@@ -49,7 +59,30 @@
         <h2>Lista de Jogadores</h2>
         {% if jogadores %}
         <table>
-
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Numero</th>
+                    <th>posição</th>
+                    <th>Id do time</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for jogador, time in jogadores %}
+                <tr>
+                    <td>{{ jogador.id }}</td>
+                    <td>{{ jogador.nome.capitalize() }}</td>
+                    <td>{{ jogador.numero_camisa }}</td>
+                    <td>{{ jogador.posicao.capitalize() }}</td>
+                    <td>{{ time.nome}}</td>
+                    <td>
+                        <a href="{{ url_for('excluir_jogador', jogador_id=jogador.id) }}"> Excluir</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
         </table>
         {% else %}
             <p class="vazio">Nenhum jogador cadastrado ainda.</p>
